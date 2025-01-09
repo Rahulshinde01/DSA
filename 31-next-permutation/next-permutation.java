@@ -1,39 +1,45 @@
 class Solution {
-    private void swap(int[] nums, int i, int j) {
-        int temp = nums[i];
-        nums[i] = nums[j];
-        nums[j] = temp;
+    private void swap(int[] arr, int i, int j){
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
     }
 
-    private void reverse(int[] nums, int start) {
-        int end = nums.length - 1;
-        while (start < end) {
-            swap(nums, start, end);
-            start++;
-            end--;
+    private void reverse(int[] arr, int i, int j){
+        while(i < j){
+            swap(arr, i, j);
+            i++;
+            j--;
         }
     }
+
     public void nextPermutation(int[] nums) {
         int len = nums.length;
 
-        int i = len - 2;
-        // Find first decreasing element from right
-        while (i >= 0 && nums[i] >= nums[i + 1]) {
-            i--;
-        }
-
-        if (i >= 0) {
-            int j = nums.length - 1;
-            // Find smallest number greater than nums[i] to its right
-            while (j >= 0 && nums[j] <= nums[i]) {
-                j--;
+        int ind = -1;
+        for(int i = len - 2; i >= 0; i--){
+            if(nums[i] < nums[i + 1]){
+                ind = i;
+                break;
             }
-            // Swap the numbers
-            swap(nums, i, j);
         }
 
-        // Reverse the subarray to the right of i
-        reverse(nums, i + 1);
+        if(ind == -1){
+            reverse(nums, 0, len - 1);
+            return;
+        }
 
+        int j = -1;
+        for(int i = len - 1; i >= 0; i--){
+            if(nums[ind] < nums[i]){
+                j = i;
+                break;
+            }
+        }
+
+
+        swap(nums, ind, j);
+
+        reverse(nums, ind + 1, len - 1);
     }
 }
