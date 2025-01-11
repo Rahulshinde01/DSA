@@ -21,11 +21,7 @@ class Solution {
             }
         }
 
-        if(count <= k){
-            return true;
-        }
+        return (count <= k);
         
-        return false;
-       
     }
 }
