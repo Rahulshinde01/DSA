@@ -4,20 +4,16 @@ class Solution {
         int buy = Integer.MAX_VALUE;
         int ans = 0;
 
-        int m = -1;
-        int n = -1;
+// without using index
+        int diff = 0;
         for(int i = 0; i < len; i++){
             if(prices[i] < buy){
                 buy = prices[i];
-                m = i; 
-                n = i;
             }
 
-
-            if(prices[i] > prices[n]){
-                n = i;
-                int diff = prices[n] - prices[m];
-                ans = Math.max(ans, diff);
+            diff = prices[i] - buy;
+            if(diff > ans){
+                ans = diff;
             }
         }
 
