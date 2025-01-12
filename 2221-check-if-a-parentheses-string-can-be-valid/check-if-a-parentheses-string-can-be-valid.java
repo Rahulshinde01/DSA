@@ -1,44 +1,44 @@
 class Solution {
+    // tc = o(n)
+    // sc = o(1)
     public boolean canBeValid(String s, String locked) {
         int len = locked.length();
         if(len % 2 != 0){
             return false;
         }
         
-
-        Stack<Integer> open = new Stack<>();
-        Stack<Integer> unlocked = new Stack<>();
-
-
+        int open = 0;
         for(int i = 0; i < len; i++){
             char ch = s.charAt(i);
             int val = locked.charAt(i);
-            if(ch == '(' && val == '1'){
-                open.push(i);
-            }
-            else if(ch == ')' && val == '1'){
-                if(!open.isEmpty()){
-                    open.pop();
-                }
-                else if(!unlocked.isEmpty()){
-                    unlocked.pop();
-                }
-                else{
-                    return false;
-                }
+            if(ch == '(' || val == '0'){
+                open++;
             }
             else{
-                unlocked.push(i);
+                open--;
+            }
+
+            if(open < 0){
+                return false;
             }
         }
-        while(!open.isEmpty() && !unlocked.isEmpty() && open.peek() < unlocked.peek()){
-            open.pop();
-            unlocked.pop();
-        }
 
-        if(!open.isEmpty()){
-            return false;
+        int close = 0;
+        for(int i = len - 1; i >= 0; i--){
+            char ch = s.charAt(i);
+            int val = locked.charAt(i);
+            if(ch == ')' || val == '0'){
+                close++;
+            }
+            else{
+                close--;
+            }
+
+            if(close < 0){
+                return false;
+            }
         }
+        
 
         return true;
         
