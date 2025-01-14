@@ -1,24 +1,20 @@
 class Solution {
     public int minimumLength(String s) {
-        int len = s.length();
+         int n = s.length();
 
-        Map<Character, Integer> map = new HashMap<>();
+        int[] freq = new int[26];
+        int deleted = 0;
 
-        for(int i = 0; i < len; i++){
-            char ch = s.charAt(i);
+        for(int i = 0; i < n; i++) {
+            freq[s.charAt(i) - 'a'] += 1;
 
-            map.put(ch, map.getOrDefault(ch, 0) + 1);
-
-            if(map.get(ch) == 3){
-                map.put(ch, 1);
+            if(freq[s.charAt(i) -'a'] == 3) {
+                freq[s.charAt(i) - 'a'] -= 2;
+                deleted += 2;
             }
         }
 
-        int ans = 0;
-        for(Map.Entry<Character, Integer> entry : map.entrySet()){
-            ans += entry.getValue();
-        }
-
-        return ans;
+        return n - deleted;
+        
     }
 }
