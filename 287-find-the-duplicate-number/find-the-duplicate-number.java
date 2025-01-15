@@ -15,17 +15,7 @@ class Solution {
             }
         }
 
-        System.out.println(Arrays.toString(nums));
-
-
-        for(int i = 0; i < len; i++){
-            if(nums[i] != i + 1){
-                ans = nums[i];
-                break;
-            }
-        }
-
-        return ans;
+        return nums[len - 1];
 
     }
 }
