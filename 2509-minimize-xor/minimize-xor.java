@@ -20,7 +20,7 @@ class Solution {
                 while((x & (1<<bit)) == 0){
                     bit++;
                 }
-                x = x & ~(1<<bit);
+                x = x ^ (1<<bit);
             }
         }
         
