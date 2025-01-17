@@ -6,7 +6,12 @@ class Solution {
 
         for(int i = 0; i < len - 1; i++){
             int bit = derived[i];
-            arr[i + 1] = arr[i] ^ bit;
+            if(bit == 0){
+                arr[i + 1] = arr[i];
+            }
+            else{
+                arr[i + 1] = arr[i] ^ 1;
+            }
         }
 
         if((arr[len - 1] ^ arr[0]) == derived[len - 1]){
