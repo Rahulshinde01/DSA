@@ -4,6 +4,7 @@ class Solution {
         int[] vec = nums.clone();
         Arrays.sort(vec);
 
+
         int groupNum = 0;
         Map<Integer, Integer> numToGroup = new HashMap<>();
         Map<Integer, LinkedList<Integer>> groupToList = new HashMap<>();
