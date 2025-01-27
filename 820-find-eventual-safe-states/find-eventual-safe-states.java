@@ -1,29 +1,32 @@
 class Solution {
     public List<Integer> eventualSafeNodes(int[][] graph) {
-        // V+E
-        // V
-        HashMap<Integer,Boolean> map = new HashMap<>();
-        int n = graph.length;
-        List<Integer> res = new ArrayList<>();
-        for(int i=0;i<n;i++){
-            if(dfs(i,graph,map)){
-                res.add(i);
+        Map<Integer, Boolean> map = new HashMap<>();
+        int len = graph.length;
+        List<Integer> list = new ArrayList<>();
+
+        for(int i = 0; i < len; i++){
+            if(dfs(i, graph, map)){
+                list.add(i);
             }
         }
-        return res;
+
+        return list;
     }
-    public boolean dfs(int node, int[][] graph, HashMap<Integer,Boolean> map){
+    public boolean dfs(int node, int[][] graph, Map<Integer, Boolean> map){
         if(map.containsKey(node)){
             return map.get(node);
         }
 
-        map.put(node,false);
-        for(int neighbour : graph[node]){
+        map.put(node, false);
+
+        for(int neighbour: graph[node]){
             if(!dfs(neighbour, graph, map)){
                 return false;
             }
         }
-        map.put(node,true);
+
+        map.put(node, true);
+
         return true;
     }
 }
