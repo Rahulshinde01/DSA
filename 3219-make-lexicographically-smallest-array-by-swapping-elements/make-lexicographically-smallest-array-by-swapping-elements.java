@@ -1,34 +1,37 @@
 class Solution {
     public int[] lexicographicallySmallestArray(int[] nums, int limit) {
-        int n = nums.length;
-        int[] vec = nums.clone();
-        Arrays.sort(vec);
+        int len = nums.length;
+        int[] temp = new int[len];
+        for(int i = 0; i < len; i++){
+            temp[i] = nums[i];
+        }
 
+        Arrays.sort(temp);
 
-        int groupNum = 0;
-        Map<Integer, Integer> numToGroup = new HashMap<>();
-        Map<Integer, LinkedList<Integer>> groupToList = new HashMap<>();
+        List<Deque<Integer>> list = new ArrayList<>();
+        Map<Integer, Integer> map = new HashMap<>();
 
-        numToGroup.put(vec[0], groupNum);
-        groupToList.putIfAbsent(groupNum, new LinkedList<>());
-        groupToList.get(groupNum).add(vec[0]);
-
-        for (int i = 1; i < n; i++) {
-            if (Math.abs(vec[i] - vec[i - 1]) > limit) {
-                groupNum++;
+        int groupIndex = 0;
+        map.put(temp[0], groupIndex);
+        list.add(new LinkedList<>());
+        list.get(groupIndex).offer(temp[0]);
+        
+        for(int i = 1; i < len; i++){
+            if(temp[i] - list.get(groupIndex).peekLast() > limit){
+                groupIndex++;
+                list.add(new LinkedList<>());
             }
-            numToGroup.put(vec[i], groupNum);
-            groupToList.putIfAbsent(groupNum, new LinkedList<>());
-            groupToList.get(groupNum).add(vec[i]);
+            list.get(groupIndex).offer(temp[i]);
+            map.put(temp[i], groupIndex);
         }
 
-        int[] result = new int[n];
-        for (int i = 0; i < n; i++) {
-            int num = nums[i];
-            int group = numToGroup.get(num);
-            result[i] = groupToList.get(group).pollFirst(); // Use and remove the smallest element
+
+        for(int i = 0; i < len; i++){
+            int gp = map.get(nums[i]);
+
+            nums[i] = list.get(gp).poll();
         }
 
-        return result;
+        return nums;
     }
 }
