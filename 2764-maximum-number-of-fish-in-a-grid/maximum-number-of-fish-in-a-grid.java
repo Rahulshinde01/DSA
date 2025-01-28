@@ -9,6 +9,7 @@ class Solution {
             for (int j = 0; j < cols; j++) {
                 if (grid[i][j] > 0 && (!visited[i][j])) {
                     ans = Math.max(ans, dfs(i, j, grid, visited));
+                    visited[i][j] = true;
                 }
             }
         }
