@@ -12,12 +12,12 @@ class Solution {
 
         while(i < n1 && j < n2){
             if(g[i] <= s[j]){
-                ans++;
+                // ans++;
                 i++;
             }
             j++;
         }
 
-        return ans;
+        return i;
     }
 }
