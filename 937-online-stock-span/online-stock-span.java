@@ -1,26 +1,19 @@
+import java.util.Stack;
+
 class StockSpanner {
-    Stack<Integer> stack; // for price
-    Stack<Integer> special; // for days 
+    private Stack<int[]> stack;
 
     public StockSpanner() {
         stack = new Stack<>();
-        special = new Stack<>();
-        
     }
     
     public int next(int price) {
-        int ans = 1; // as today is included
-        while(!stack.isEmpty() && stack.peek() <= price){ // as per the codition required
-            stack.pop();
-            ans += special.pop(); // finding answer
-
+        int span = 1;
+        while (!stack.isEmpty() && stack.peek()[0] <= price) {
+            span += stack.pop()[1];
         }
-        stack.push(price); // maintaining the decreasing stack of price
-        special.push(ans); // days coresponds to price
-
-        return ans; // returning days
-        
-        
+        stack.push(new int[]{price, span});
+        return span;
     }
 }
 
