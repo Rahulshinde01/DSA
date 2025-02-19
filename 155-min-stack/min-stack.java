@@ -1,54 +1,58 @@
-import java.util.Stack;
-
 class MinStack {
-    private Stack<Long> stack; // Stack to store values
-    private long minVal;       // Current minimum value
+    long minVal; // reason for using long is in line no 28 and 29
+    List<Long> list;
+    int size;
 
     public MinStack() {
-        stack = new Stack<>();
-        minVal = Long.MAX_VALUE; // Initialize minVal to a large value
+        minVal = Integer.MAX_VALUE + 1L;
+        list = new ArrayList<>();
+        size = 0;
+        
     }
     
     public void push(int val) {
-        long value = val; // Convert to long to handle overflow
-        if (stack.isEmpty()) {
-            // If the stack is empty, set minVal to the current value
-            minVal = value;
-            stack.push(value);
-        } else {
-            if (value < minVal) {
-                // If the new value is less than minVal, push a modified value
-                stack.push(2 * value - minVal); // Store the modified value
-                minVal = value; // Update minVal
-            } else {
-                // Otherwise, push the value as is
-                stack.push(value);
-            }
+        long toBePushed = val;
+        if(val < minVal){
+            toBePushed = 2 * (long)val - minVal; // here y = toBePushed and x = val
+            minVal = val;
         }
+        list.add(toBePushed);
+        size ++;
+        
     }
     
     public void pop() {
-        long top = stack.pop();
-        if (top < minVal) {
-            // If the popped value is less than minVal, it was a modified value
-            // Restore the previous minVal
-            minVal = 2 * minVal - top;
+        long element = list.get(size - 1);
+        if(element < minVal){
+            minVal = 2 * (long)minVal - element; //here  y = element
+            // why we need long type data member(i.e minVal) => 
+            // reason - the above calculation of minVal can lead to having number less than Integer.MIN_VALUE
         }
+        list.remove(size - 1);
+        size --;
+        
     }
     
     public int top() {
-        long top = stack.peek();
-        if (top < minVal) {
-            // If the top value is less than minVal, it's a modified value
-            // The actual top value is minVal
-            return (int) minVal;
-        } else {
-            // Otherwise, return the top value as is
-            return (int) top;
+        long element = list.get(size - 1);
+        if(element < minVal){
+            element = minVal; // returning the actual peek value
         }
+        return (int)element;
+        
     }
     
     public int getMin() {
-        return (int) minVal;
+        return (int)minVal;
+        
     }
 }
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * MinStack obj = new MinStack();
+ * obj.push(val);
+ * obj.pop();
+ * int param_3 = obj.top();
+ * int param_4 = obj.getMin();
+ */
