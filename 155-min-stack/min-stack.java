@@ -49,9 +49,6 @@ class MinStack {
     }
     
     public int getMin() {
-        if (stack.isEmpty()) {
-            throw new RuntimeException("Stack is empty");
-        }
         return (int) minVal;
     }
 }
